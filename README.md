@@ -6,26 +6,7 @@ Here's a step-by-step guide to creating a Docker image for a React application:
 
 Create a file named Dockerfile in your React application's root directory:
 
-#Use an official Node.js image as the base
-FROM node:16
-
-#Set the working directory to /app
-WORKDIR /app
-
-#Copy package*.json to the working directory
-COPY package*.json ./
-
-#Install dependencies
-RUN npm install
-
-#Copy the rest of the application code
-COPY . .
-
-#Expose port 3000
-EXPOSE 3000
-
-#Run the command to start the React development server
-CMD ["npm", "start"]
+Use docker file in the Repo.
 
 
 # Step 2: Build the Docker Image
@@ -68,27 +49,7 @@ Here's a step-by-step guide to the deployment of  a Docker image for a React app
 
 Create a file named deployment.yaml:
 
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: my-react-app
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: my-react-app
-  template:
-    metadata:
-      labels:
-        app: my-react-app
-    spec:
-      containers:
-      - name: my-react-app
-        image: sreesaigudi/my-react-app:latest
-        ports:
-        - containerPort: 3000
-
+Use deployment.yaml in the repo.
 
 # Step 2: Apply Kubernetes Deployment
 
@@ -99,19 +60,7 @@ kubectl apply -f deployment.yaml
 
 Create a file named service.yaml:
 
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-react-app
-spec:
-  selector:
-    app: my-react-app
-  ports:
-  - name: http
-    port: 80
-    targetPort: 3000
-  type: NodePort
+Use service.yaml in the Repo.
 
 # Step 4: Apply Kubernetes Deployment
 
@@ -121,7 +70,9 @@ kubectl apply -f service.yaml
 # Step 5: Verify deployment:
 
  kubectl get deployments
+ 
  kubectl get pods
+ 
  kubectl get svc
 
 Access your React application through the Node IP.
